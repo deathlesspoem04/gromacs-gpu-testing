@@ -11,7 +11,8 @@ jobs:
       matrix:
         include:
           - os: ubuntu-20.04
-            cuda: "11.1"
+            cuda: "11.0"
+            gcc: 8
       
     timeout-minutes: 500
     
@@ -41,8 +42,12 @@ jobs:
       shell: bash
     
     # set up gcc
-    - name: install gcc
-      run: sudo apt-get install gcc
+    - name: Install/Select gcc and g++ 
+      run: |
+        sudo apt-get install -y gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+        echo "::set-env name=CC::/usr/bin/gcc-${{ matrix.gcc }}"
+        echo "::set-env name=CXX::/usr/bin/g++-${{ matrix.gcc }}"
+        echo "::set-env name=CUDAHOSTCXX::/usr/bin/g++-${{ matrix.gcc }}"
       
     # set up cmake
     - name: install cmake
