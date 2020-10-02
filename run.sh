@@ -1,6 +1,6 @@
 #!/bin/bash
 start=`date +%s`
-gmx pdb2gmx -f 1d01_singlechain.pdb -o 1.gro -p 1.top -water spce -ff 'oplsaa.ff'
+gmx pdb2gmx -f 1d01_singlechain.pdb -o 1.gro -p 1.top -water spce
 gmx editconf -f 1.gro -o box.gro -c -d 1.0 -bt cubic
 gmx solvate -cp box.gro -cs spc216.gro -o water_box.gro -p 1.top
 gmx grompp -f ions.mdp -c water_box.gro -p 1.top -o ions.tpr
