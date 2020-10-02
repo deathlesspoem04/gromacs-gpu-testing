@@ -14,8 +14,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-20.04
-            cuda: "11.1"
-            gcc: 8
+            cuda: "10.2"
       
     timeout-minutes: 500
     
