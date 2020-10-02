@@ -3,6 +3,8 @@ name: CI run
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -16,6 +18,20 @@ jobs:
 #       run: |
 #         sudo apt update
 #         sudo apt-get upgrade
+    
+    - name: Install CUDA
+      env:
+        cuda: ${{ matrix.cuda }}
+      run: |
+        source ./scripts/actions/install_cuda_ubuntu.sh
+        if [[ $? -eq 0 ]]; then
+          # Set paths for subsequent steps, using ${CUDA_PATH}
+          echo "Adding CUDA to CUDA_PATH, PATH and LD_LIBRARY_PATH"
+          echo "::set-env name=CUDA_PATH::${CUDA_PATH}"
+          echo "::add-path::${CUDA_PATH}/bin"
+          echo "::set-env name=LD_LIBRARY_PATH::${CUDA_PATH}/lib:${LD_LIBRARY_PATH}"
+        fi
+      shell: bash
     
     # set up gcc
     - name: install gcc
