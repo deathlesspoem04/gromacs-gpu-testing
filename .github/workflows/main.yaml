@@ -8,8 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            cuda: "11.1"
+            gcc: 8
+      
     timeout-minutes: 500
+    
+    env:
+      cuda_arch: "35;75"    
 
     steps:
     - uses: actions/checkout@v2
