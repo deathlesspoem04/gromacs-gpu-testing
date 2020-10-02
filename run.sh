@@ -34,17 +34,17 @@ gmx energy -f em.edr -o potential.xvg
 printf "\nWe now stabilize our system:\n"
 gmx grompp -f nvt.mdp -c em.gro -r em.gro -p 1.top -o nvt.tpr
 
-gmx mdrun -deffnm nvt -n gpu
+gmx mdrun -deffnm nvt -nb gpu
 
 printf "\nNow, the temperature is completely stable, now its time to stabilize the Pressure\n"
 gmx grompp -f npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p 1.top -o npt.tpr
 
-gmx mdrun -deffnm npt -n gpu
+gmx mdrun -deffnm npt -nb gpu
 
 printf "\nNow run the simulation command:\n"
 gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p 1.top -o full_md.tpr
 
-gmx mdrun -deffnm full_md -n gpu
+gmx mdrun -deffnm full_md -nb gpu
 
 printf "\nNow we can make the RMSD graph:\n"
 gmx rms -s full_md.tpr -f full_md1.xtc -o rmsd.xvg
