@@ -1,1 +1,1 @@
-# gromacs-gpu-testing
+# gromacs-tutorial
