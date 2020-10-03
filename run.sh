@@ -29,11 +29,11 @@ gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p 1.top -o full_md.tpr
 
 gmx mdrun -deffnm full_md -nb gpu
 
-gmx rms -s full_md.tpr -f full_md1.xtc -o rmsd.xvg
+gmx rms -s full_md.tpr -f full_md.xtc -o rmsd.xvg
 
-gmx rmsf -s full_md.tpr -f full_md1.xtc -res -o rmsf.xvg
+gmx rmsf -s full_md.tpr -f full_md.xtc -res -o rmsf.xvg
 
-gmx gyrate -s full_md.tpr -f full_md1.xtc -o gyr.xvg
+gmx gyrate -s full_md.tpr -f full_md.xtc -o gyr.xvg
 
 end=`date +%s`
 runtime=$((end-start))
